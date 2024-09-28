@@ -26,7 +26,7 @@ Common options:
        
 ```ps aux```: Show processes for all users, including those without a terminal.
 ```
-env Command
+env
 ```
 Displays environment variables.
 The ```PATH``` variable might include potential vectors for privilege escalation.
