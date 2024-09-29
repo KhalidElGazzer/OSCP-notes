@@ -112,8 +112,26 @@ Find files with the SUID bit:
 find / -perm -u=s -type f 2>/dev/null
 ```
 
+Password enumeration:
+---
 
+```
+$ history
+```
 
+SSH Key
+----
+look for ssh key :
 
-
-   
+```
+find / -name authorized_keys 2> /dev/null
+find / -name id_rsa 2> /dev/null
+```
+if we found SSH KEY Copy the key over to your local machine, and give it permissions (600)
+```
+chmod 600 root_key
+```
+use it to login:
+```
+ssh -i root_key_file root@<target ip>
+```   
