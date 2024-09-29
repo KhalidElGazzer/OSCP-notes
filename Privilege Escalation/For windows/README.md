@@ -79,6 +79,9 @@ If `C:\Program.exe` exists (created by an attacker), it will be executed with el
 **Tools for Privilege Escalation:**
 
 * Windows Exploit Suggester: Scans the system to identify missing patches and potential vulnerabilities.
+```
+  python3 windows-exploit-suggester.py --database 2024-09-29-mssb.xlsx --systeminfo <output of Systeminfo command.txt>
+```
 * mimikatz: A post-exploitation tool that can extract passwords, hashes, PINs, and Kerberos tickets from memory. It’s commonly used for token impersonation and dumping passwords.
 * PowerUp: A PowerShell script that automates the search for common privilege escalation vectors on Windows.
 * Sherlock: A PowerShell script that checks for known Windows privilege escalation vulnerabilities.
