@@ -29,6 +29,7 @@ void main(){
 2. In order to make it excutable:
 ```
 gcc path.c -o path -w
+chmod +x path
 ```
 >NOTE >>> if we write ```lol``` in the terminal, we will get an error indicating the command not found.
 
