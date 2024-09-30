@@ -85,7 +85,7 @@ If `C:\Program.exe` exists (created by an attacker), it will be executed with el
 * mimikatz: A post-exploitation tool that can extract passwords, hashes, PINs, and Kerberos tickets from memory. It’s commonly used for token impersonation and dumping passwords.
 * PowerUp: A PowerShell script that automates the search for common privilege escalation vectors on Windows.
 * Sherlock: A PowerShell script that checks for known Windows privilege escalation vulnerabilities.
-
+* Metaspolit: the `post/multi/recon/local_exploit_suggester` can be used once we have a session. 
 
 
 
