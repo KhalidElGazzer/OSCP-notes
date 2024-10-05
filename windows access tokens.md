@@ -73,7 +73,8 @@ Privileges are permissions assigned to user accounts, allowing them to perform s
 
 If we do this command we will list the available privileges:
 ```
-whoami /priv
+whoami /priv  > #cmd
+getprivs   > #meterpreter
 ```
 
 
