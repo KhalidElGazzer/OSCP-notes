@@ -33,7 +33,8 @@ gcc script.c -o script -w
 ```
 sudo chmod +s script
 ```
-You will see below that both files (nfs.c and nfs are present on the target system. We have worked on the mounted share so there was no need to transfer them). 
+You will see below that both files (script.c and script are present on the target system. We have worked on the mounted share so there was no need to transfer them). 
+
 6. In the target machine, we should go to the shared directory and run `script` file:
 ```
 ./script
